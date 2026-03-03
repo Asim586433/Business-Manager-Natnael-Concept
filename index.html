@@ -46,11 +46,20 @@
       border: none;
       font-size: 1rem;
       cursor: pointer;
+      transition: background 0.3s, color 0.3s, transform 0.2s;
+    }
+    .btn:hover {
+      background: #a83b24;
+      transform: translateY(-2px);
     }
     .btn-outline {
       background: transparent;
       border: 2px solid var(--secondary);
       color: var(--secondary);
+    }
+    .btn-outline:hover {
+      background: var(--secondary);
+      color: var(--white);
     }
 
     /* Header */
@@ -101,11 +110,25 @@
     }
     .nav-links a {
       text-decoration: none;
-      font-weight: 550;
+      font-weight: 600;
       color: var(--primary);
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: var(--secondary);
+    }
+    .quote-btn {
+      border: 2px solid var(--secondary);
+      padding: 0.5rem 1.2rem;
+      border-radius: 2rem;
+      transition: background 0.3s, color 0.3s;
+    }
+    .quote-btn:hover {
+      background: var(--secondary);
+      color: var(--white) !important;
     }
 
-    /* HERO - EXACT MATCH TO IMAGE */
+    /* HERO */
     .hero {
       padding: 2rem 1.5rem;
     }
@@ -150,7 +173,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200"><path d="M60,130 L140,70 L220,100 L300,60 L340,90 L340,150 L60,150Z" fill="%23e8b33c" opacity="0.9"/><circle cx="110" cy="150" r="25" fill="%23333"/><circle cx="260" cy="150" r="25" fill="%23333"/><rect x="170" y="95" width="45" height="30" fill="%23c4452b" rx="6"/></svg>');
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'%3E%3Cpath d='M60,130 L140,70 L220,100 L300,60 L340,90 L340,150 L60,150Z' fill='%23e8b33c' opacity='0.9'/%3E%3Ccircle cx='110' cy='150' r='25' fill='%23333'/%3E%3Ccircle cx='260' cy='150' r='25' fill='%23333'/%3E%3Crect x='170' y='95' width='45' height='30' fill='%23c4452b' rx='6'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
@@ -188,6 +211,11 @@
       padding: 2rem;
       box-shadow: 0 8px 24px rgba(0,20,40,0.08);
       border: 1px solid #eee;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,20,40,0.12);
     }
     .card-icon {
       background: var(--primary);
@@ -216,6 +244,10 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
+      transition: gap 0.3s;
+    }
+    .card-link:hover {
+      gap: 0.75rem;
     }
 
     /* Values */
@@ -239,6 +271,11 @@
       border-radius: 1rem;
       text-align: center;
       border: 1px solid #e2e8f0;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .value-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
     .value-emoji {
       font-size: 2.5rem;
@@ -263,10 +300,25 @@
       width: 100%;
       padding: 1rem;
       margin-bottom: 1rem;
-      border-radius: 2rem;
+      border-radius: 1.5rem;
       border: none;
       background: rgba(255,255,255,0.1);
       color: white;
+      font-family: inherit;
+      transition: outline 0.2s, background 0.2s;
+    }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: 2px solid var(--accent);
+      background: rgba(255,255,255,0.15);
+    }
+    .contact-form textarea {
+      resize: vertical;
+      border-radius: 1rem;
     }
     .contact-form button {
       background: var(--accent);
@@ -277,6 +329,12 @@
       font-weight: 600;
       width: 100%;
       cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      font-size: 1rem;
+    }
+    .contact-form button:hover {
+      background: #f0c354;
+      transform: translateY(-2px);
     }
 
     /* Footer */
@@ -301,6 +359,14 @@
         grid-template-columns: 1fr;
       }
     }
+    @media (max-width: 480px) {
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -314,38 +380,33 @@
         <a href="#services">Services</a>
         <a href="#values">Values</a>
         <a href="#contact">Contact</a>
-        <a href="#quote" style="border:2px solid var(--secondary); padding:0.5rem 1.2rem; border-radius:2rem;">Get quote</a>
+        <a href="#quote" class="quote-btn">Get quote</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <!-- HERO SECTION - PERFECT MATCH TO IMAGE -->
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-content">
           <h1>Regional flatbed.<br>Reliable. Ready.</h1>
           
-          <!-- Single bullet point exactly as shown -->
           <div class="hero-bullet">
             Heavy haul, machinery, and building materials — 24/7 dispatch across 12 states.
           </div>
           
-          <!-- Two buttons exactly as shown -->
           <div class="hero-buttons">
             <a href="#services" class="btn">Our services</a>
             <a href="#contact" class="btn btn-outline">Contact fleet</a>
           </div>
         </div>
         
-        <!-- Image with FLATBED text overlay -->
         <div class="hero-image">
           <div class="hero-image-text">FLATBED</div>
         </div>
       </div>
     </section>
 
-    <!-- SERVICES SECTION - EXACT HEADER -->
     <section id="services" class="services-section">
       <div class="container">
         <h2>Specialized flatbed solutions</h2>
@@ -373,7 +434,6 @@
       </div>
     </section>
 
-    <!-- VALUES SECTION -->
     <section id="values" class="values-section">
       <div class="container">
         <h2>Our core values</h2>
@@ -390,7 +450,6 @@
       </div>
     </section>
 
-    <!-- CONTACT SECTION -->
     <section id="contact" class="contact-section">
       <div class="container contact-grid">
         <div>
@@ -399,7 +458,7 @@
           <p>✉️ dispatch@pinnacleflatbed.test</p>
           <p>📍 4700 Freightliner Ave, Indianapolis</p>
         </div>
-        <div class="contact-form">
+        <div class="contact-form" id="quote">
           <h3>Request callback / quote</h3>
           <form onsubmit="event.preventDefault(); alert('Message sent (demo)');">
             <input type="text" placeholder="Full name *" required>
@@ -423,8 +482,14 @@
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
+        
+        // Skip dummy links and links with onclick
         if (href === "#" || this.hasAttribute('onclick')) return;
-        const target = document.querySelector(href);
+        
+        // Use getElementById to avoid DOMException with document.querySelector on numbers in IDs
+        const targetId = href.substring(1);
+        const target = document.getElementById(targetId);
+        
         if (target) {
           e.preventDefault();
           target.scrollIntoView({ behavior: 'smooth' });
