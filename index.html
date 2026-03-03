@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Manager · Natnael · Concept</title>
-    <!-- Font Awesome 5 (for icons) -->
+    <title>Business Manager · Natnael · Full Functional Prototype</title>
+    <!-- Font Awesome 5 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Google Font: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
@@ -18,12 +18,17 @@
         body {
             font-family: 'Inter', sans-serif;
             background: #f3f6f9;
-            display: flex;
-            height: 100vh;
             color: #1a2639;
         }
 
-        /* ----- SIDEBAR (Role-based navigation) ----- */
+        /* App container for multi-page behavior */
+        .app-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ----- SIDEBAR (persistent across all pages) ----- */
         .sidebar {
             width: 280px;
             background: #0b2b40;
@@ -31,6 +36,8 @@
             display: flex;
             flex-direction: column;
             box-shadow: 2px 0 12px rgba(0,0,0,0.05);
+            height: 100vh;
+            overflow-y: auto;
         }
 
         .sidebar-header {
@@ -57,7 +64,7 @@
             padding: 24px 0 0 0;
         }
 
-        .sidebar-nav .nav-item {
+        .nav-item {
             display: flex;
             align-items: center;
             gap: 14px;
@@ -67,24 +74,26 @@
             color: #cbd5e0;
             transition: all 0.15s;
             cursor: pointer;
+            text-decoration: none;
+            width: calc(100% - 16px);
         }
 
-        .sidebar-nav .nav-item i {
+        .nav-item i {
             width: 24px;
             font-size: 1.2rem;
             color: #7aa5b9;
         }
 
-        .sidebar-nav .nav-item.active {
+        .nav-item.active {
             background: #1f4a5e;
             color: white;
         }
 
-        .sidebar-nav .nav-item.active i {
+        .nav-item.active i {
             color: #56c596;
         }
 
-        .sidebar-nav .nav-item:hover:not(.active) {
+        .nav-item:hover:not(.active) {
             background: #1d3f50;
             color: #f0f4f8;
         }
@@ -101,15 +110,16 @@
             letter-spacing: 0.3px;
         }
 
-        /* ----- MAIN CONTENT (dashboard) ----- */
+        /* ----- MAIN CONTENT AREA (changes based on page) ----- */
         .main {
             flex: 1;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
+            background: #f3f6f9;
         }
 
-        /* top bar */
+        /* top bar (persistent) */
         .top-bar {
             background: white;
             padding: 16px 32px;
@@ -117,6 +127,9 @@
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid #e9eef2;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         .page-title h1 {
@@ -156,13 +169,13 @@
             cursor: pointer;
         }
 
-        /* dashboard content */
+        /* content area that changes per page */
         .content {
             padding: 32px;
             overflow-y: auto;
         }
 
-        /* KPI cards */
+        /* KPI cards (used in dashboard) */
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -211,7 +224,6 @@
             margin-right: 4px;
         }
 
-        /* feature grid — modules */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -230,6 +242,7 @@
             font-weight: 500;
             text-decoration: none;
             font-size: 0.95rem;
+            cursor: pointer;
         }
 
         .feature-grid {
@@ -296,7 +309,6 @@
             font-weight: 600;
         }
 
-        /* financial & inventory rows (mock) */
         .split-panel {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -336,7 +348,6 @@
             font-size: 0.85rem;
         }
 
-        /* third party / communication */
         .comms-bar {
             display: flex;
             gap: 12px;
@@ -375,6 +386,124 @@
             background: #1f4a5e;
         }
 
+        /* Table styles for data pages */
+        .data-table {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 16px 12px;
+            color: #5e6f88;
+            font-weight: 500;
+            border-bottom: 2px solid #ecf1f6;
+        }
+
+        .data-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #ecf1f6;
+        }
+
+        .data-table tr:hover {
+            background: #f9fcff;
+        }
+
+        .status-badge {
+            background: #e3f3ed;
+            color: #0b2b40;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .action-button {
+            background: none;
+            border: 1px solid #dae3ec;
+            padding: 6px 14px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 0 4px;
+        }
+
+        .action-button:hover {
+            background: #f0f5fa;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            align-items: center;
+        }
+
+        .filter-input {
+            padding: 12px 20px;
+            border: 1px solid #dae3ec;
+            border-radius: 40px;
+            flex: 1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .primary-button {
+            background: #0b2b40;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .primary-button:hover {
+            background: #1f4a5e;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            width: 500px;
+            max-width: 90%;
+        }
+
+        .modal h3 {
+            margin-bottom: 20px;
+        }
+
+        .modal input, .modal select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 16px;
+            border: 1px solid #dae3ec;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+
         footer {
             text-align: center;
             color: #8f9fb1;
@@ -384,7 +513,15 @@
             padding-top: 20px;
         }
 
-        /* responsiveness */
+        /* Page visibility */
+        .page {
+            display: none;
+        }
+
+        .page.active-page {
+            display: block;
+        }
+
         @media (max-width: 1000px) {
             .kpi-grid { grid-template-columns: repeat(2,1fr); }
             .feature-grid { grid-template-columns: repeat(2,1fr); }
@@ -392,175 +529,863 @@
     </style>
 </head>
 <body>
-    <!-- SIDEBAR (role: admin) -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <h2><i class="fas fa-cube"></i> Busin·Eth</h2>
+    <div class="app-container">
+        <!-- SIDEBAR (persistent) -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-cube"></i> Busin·Eth</h2>
+            </div>
+            <div class="role-badge">
+                <i class="fas fa-shield-alt"></i> ADMIN ACCESS · full control
+            </div>
+            <div class="sidebar-nav">
+                <a class="nav-item" onclick="switchPage('dashboard')" id="nav-dashboard">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a class="nav-item" onclick="switchPage('financial')" id="nav-financial">
+                    <i class="fas fa-cash-register"></i> Financial
+                </a>
+                <a class="nav-item" onclick="switchPage('inventory')" id="nav-inventory">
+                    <i class="fas fa-boxes"></i> Inventory
+                </a>
+                <a class="nav-item" onclick="switchPage('sales')" id="nav-sales">
+                    <i class="fas fa-shopping-cart"></i> Sales & Purchases
+                </a>
+                <a class="nav-item" onclick="switchPage('employees')" id="nav-employees">
+                    <i class="fas fa-users"></i> Employees (RBAC)
+                </a>
+                <a class="nav-item" onclick="switchPage('insights')" id="nav-insights">
+                    <i class="fas fa-chart-line"></i> AI Insights
+                </a>
+                <a class="nav-item" onclick="switchPage('communication')" id="nav-communication">
+                    <i class="fas fa-comment-dots"></i> Communication
+                </a>
+                <a class="nav-item" onclick="switchPage('logs')" id="nav-logs">
+                    <i class="fas fa-file-alt"></i> Immutable logs
+                </a>
+            </div>
         </div>
-        <div class="role-badge">
-            <i class="fas fa-shield-alt"></i> ADMIN ACCESS · full control
-        </div>
-        <div class="sidebar-nav">
-            <div class="nav-item active">
-                <i class="fas fa-tachometer-alt"></i> Dashboard
+
+        <!-- MAIN CONTENT -->
+        <div class="main">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1 id="page-title">Business overview</h1>
+                    <p id="page-subtitle"><i class="fas fa-map-marker-alt" style="color:#56c596;"></i> Addis Ababa · central warehouse</p>
+                </div>
+                <div class="user-profile">
+                    <i class="fas fa-bell" onclick="showNotification()"></i>
+                    <i class="fas fa-envelope" onclick="showNotification()"></i>
+                    <div class="avatar" onclick="showNotification()">NA</div>
+                </div>
             </div>
-            <div class="nav-item">
-                <i class="fas fa-cash-register"></i> Financial
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-boxes"></i> Inventory
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-shopping-cart"></i> Sales & Purchases
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-users"></i> Employees (RBAC)
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-chart-line"></i> AI Insights
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-comment-dots"></i> Communication
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-file-alt"></i> Immutable logs
+
+            <div class="content">
+                <!-- DASHBOARD PAGE (original preserved) -->
+                <div id="page-dashboard" class="page active-page">
+                    <!-- KPI row -->
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-title"><i class="fas fa-chart-pie" style="color:#32936f;"></i> Today's P&L</div>
+                            <div class="kpi-value">+ ETB 24,580</div>
+                            <div class="kpi-trend"><i class="fas fa-arrow-up"></i> +5.3% vs yesterday</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title"><i class="fas fa-exclamation-triangle" style="color:#e67e22;"></i> Low stock alerts</div>
+                            <div class="kpi-value">7 items</div>
+                            <div class="kpi-trend">2 expiring in ≤7 days</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title"><i class="fas fa-hand-holding-usd"></i> Outstanding loans</div>
+                            <div class="kpi-value">ETB 342,000</div>
+                            <div class="kpi-trend">3 due this week <i class="fas fa-clock" style="margin-left:6px;"></i></div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title"><i class="fas fa-truck"></i> Warehouse transfers</div>
+                            <div class="kpi-value">12 pending</div>
+                            <div class="kpi-trend"><i class="fas fa-sync-alt"></i> offline sync ready</div>
+                        </div>
+                    </div>
+
+                    <!-- Feature modules -->
+                    <div class="section-header">
+                        <h3>Core modules <span class="badge-offline"><i class="fas fa-wifi-slash"></i> offline capable</span></h3>
+                        <a onclick="switchPage('financial')">view all <i class="fas fa-arrow-right"></i></a>
+                    </div>
+
+                    <div class="feature-grid">
+                        <div class="feature-card" onclick="switchPage('financial')">
+                            <div class="feature-icon"><i class="fas fa-wallet"></i></div>
+                            <h4>Financial ops <span style="color:#56c596; font-size:0.8rem;">+ loans</span></h4>
+                            <p>Banks, branches, expense categories, receipt capture & tax (VAT/withholding).</p>
+                            <span class="feature-tag">unlimited banks</span>
+                        </div>
+                        <div class="feature-card" onclick="switchPage('inventory')">
+                            <div class="feature-icon"><i class="fas fa-box-open"></i></div>
+                            <h4>Inventory (FIFO) </h4>
+                            <p>Batch tracking, expiry alerts, low-stock reorder, product images & attributes.</p>
+                            <span class="feature-tag">shelf-life alerts</span>
+                        </div>
+                        <div class="feature-card" onclick="switchPage('sales')">
+                            <div class="feature-icon"><i class="fas fa-file-invoice"></i></div>
+                            <h4>Sales & invoices</h4>
+                            <p>Partial/credit payments, add customer/product on fly, order status.</p>
+                            <span class="feature-tag">invoice via mobile</span>
+                        </div>
+                        <div class="feature-card" onclick="switchPage('communication')">
+                            <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                            <h4>Team chat & notifications</h4>
+                            <p>In-app chat, push, WhatsApp/SMS/Telegram bulk messaging.</p>
+                            <span class="feature-tag">bulk promo</span>
+                        </div>
+                        <div class="feature-card" onclick="switchPage('insights')">
+                            <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+                            <h4>AI insights</h4>
+                            <p>Sales forecast, shortage prediction, margin analysis.</p>
+                            <span class="feature-tag">export PDF/Excel</span>
+                        </div>
+                        <div class="feature-card" onclick="switchPage('employees')">
+                            <div class="feature-icon"><i class="fas fa-fingerprint"></i></div>
+                            <h4>Secure access</h4>
+                            <p>Biometric/PIN, role dashboards, immutable activity logs.</p>
+                            <span class="feature-tag">RBAC + audit</span>
+                        </div>
+                    </div>
+
+                    <!-- Detailed rows -->
+                    <div class="split-panel">
+                        <div class="panel">
+                            <h5><i class="fas fa-coins" style="color:#0b2b40;"></i> Profit & Loss (real-time)</h5>
+                            <div class="row-item"><span>Revenue (today)</span> <strong>ETB 43,200</strong></div>
+                            <div class="row-item"><span>Expenses (receipts)</span> <strong>ETB 18,620</strong></div>
+                            <div class="row-item"><span>Tax (VAT 15%)</span> <strong>ETB 3,645</strong></div>
+                            <div class="row-item"><span style="font-weight:600;">Net P&L</span> <span style="font-weight:700;color:#0b2b40;">ETB 20,935</span></div>
+                            <p style="margin-top:16px;"><i class="fas fa-camera"></i> 3 new receipts captured via mobile · attach</p>
+                        </div>
+                        <div class="panel">
+                            <h5><i class="fas fa-calendar-exclamation" style="color:#c44536;"></i> Expiry & batch tracking</h5>
+                            <div class="row-item"><span>Tomato paste (batch#T22)</span> <span class="expiry-warning">expires in 6 days</span></div>
+                            <div class="row-item"><span>Pharmaceutical - lot 89Z</span> <span class="expiry-warning">expires in 12 days</span></div>
+                            <div class="row-item"><span>Dairy Y-3</span> <span style="color:#e67e22;">expires in 3 days</span></div>
+                            <div class="row-item"><span>Flour sack B</span> <span>ok (fresh)</span></div>
+                            <p style="margin-top:12px;"><i class="fas fa-bell"></i> push alert sent for 2 items</p>
+                        </div>
+                    </div>
+
+                    <!-- Communication bar -->
+                    <div class="comms-bar">
+                        <div class="comms-icon"><i class="fas fa-sms"></i></div>
+                        <div class="comms-icon"><i class="fab fa-whatsapp"></i></div>
+                        <div class="comms-icon"><i class="fab fa-telegram-plane"></i></div>
+                        <div class="comms-icon"><i class="fas fa-envelope"></i></div>
+                        <span style="color:#1a2639;font-weight:500;">Message customers · bulk holiday promo</span>
+                        <button class="comms-button" onclick="switchPage('communication')"><i class="fas fa-rocket"></i> Send notification</button>
+                    </div>
+
+                    <!-- Maps + AI preview -->
+                    <div style="display: flex; gap: 20px; margin: 28px 0 20px;">
+                        <div style="background: white; border-radius: 24px; padding: 18px; flex:2; display: flex; align-items: center; gap: 15px; cursor: pointer;" onclick="showMapModal()">
+                            <i class="fas fa-map-marked-alt" style="font-size: 2rem; color:#56c596;"></i>
+                            <div><strong>Google Maps integration</strong> <span style="color:#5e6f88; display:block; font-size:0.9rem;">branch/warehouse routing · customer delivery zones</span></div>
+                        </div>
+                        <div style="background: white; border-radius: 24px; padding: 18px; flex:1.5; display: flex; align-items: center; gap: 10px; cursor: pointer;" onclick="switchPage('insights')">
+                            <i class="fas fa-robot" style="font-size: 1.8rem; color:#0b2b40;"></i>
+                            <div><strong>AI prediction:</strong> stock shortage (wheat) expected in 2 weeks</div>
+                        </div>
+                    </div>
+
+                    <footer>
+                        ⚡ offline sync enabled · role: admin · immutable logs active · © functional prototype
+                    </footer>
+                </div>
+
+                <!-- FINANCIAL PAGE -->
+                <div id="page-financial" class="page">
+                    <div class="section-header">
+                        <h3>Financial Operations</h3>
+                        <button class="primary-button" onclick="openAddTransactionModal()"><i class="fas fa-plus"></i> Add Transaction</button>
+                    </div>
+
+                    <!-- Summary cards -->
+                    <div class="kpi-grid" style="margin-bottom: 30px;">
+                        <div class="kpi-card">
+                            <div class="kpi-title">Total Revenue (MTD)</div>
+                            <div class="kpi-value">ETB 847,200</div>
+                            <div class="kpi-trend">+12.4% vs last month</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Expenses (MTD)</div>
+                            <div class="kpi-value">ETB 412,650</div>
+                            <div class="kpi-trend">Within budget</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Outstanding Loans</div>
+                            <div class="kpi-value">ETB 342,000</div>
+                            <div class="kpi-trend">3 payments due</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Tax (VAT) Collected</div>
+                            <div class="kpi-value">ETB 89,450</div>
+                            <div class="kpi-trend">Ready for filing</div>
+                        </div>
+                    </div>
+
+                    <!-- Banks & Accounts -->
+                    <div class="panel" style="margin-bottom: 24px;">
+                        <h5><i class="fas fa-university"></i> Bank Accounts</h5>
+                        <div class="row-item"><span>Commercial Bank of Ethiopia - Main</span> <strong>ETB 1,245,800</strong></div>
+                        <div class="row-item"><span>Dashen Bank - USD Account</span> <strong>$12,450</strong></div>
+                        <div class="row-item"><span>Awash Bank - Payroll</span> <strong>ETB 345,200</strong></div>
+                        <button class="action-button" style="margin-top: 16px;" onclick="showNotification('Add bank account form')"><i class="fas fa-plus"></i> Add Bank</button>
+                    </div>
+
+                    <!-- Recent Transactions -->
+                    <h5 style="margin: 24px 0 16px;">Recent Transactions</h5>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Receipt</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2024-03-15</td>
+                                <td>Supplier payment - ABC Trading</td>
+                                <td>Inventory</td>
+                                <td>-ETB 45,000</td>
+                                <td><span class="status-badge">Completed</span></td>
+                                <td><i class="fas fa-paperclip" style="color: #56c596;"></i></td>
+                            </tr>
+                            <tr>
+                                <td>2024-03-14</td>
+                                <td>Customer payment - Retail XYZ</td>
+                                <td>Sales</td>
+                                <td>+ETB 23,500</td>
+                                <td><span class="status-badge">Completed</span></td>
+                                <td><i class="fas fa-paperclip"></i></td>
+                            </tr>
+                            <tr>
+                                <td>2024-03-14</td>
+                                <td>Office rent - March</td>
+                                <td>Expense</td>
+                                <td>-ETB 15,000</td>
+                                <td><span class="status-badge">Completed</span></td>
+                                <td><i class="fas fa-paperclip" style="color: #56c596;"></i></td>
+                            </tr>
+                            <tr>
+                                <td>2024-03-13</td>
+                                <td>Loan disbursement - ABC Microfinance</td>
+                                <td>Loan</td>
+                                <td>+ETB 100,000</td>
+                                <td><span class="status-badge">Pending</span></td>
+                                <td><i class="fas fa-paperclip"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- INVENTORY PAGE -->
+                <div id="page-inventory" class="page">
+                    <div class="section-header">
+                        <h3>Inventory Management</h3>
+                        <button class="primary-button" onclick="openAddProductModal()"><i class="fas fa-plus"></i> Add Product</button>
+                    </div>
+
+                    <!-- Alert cards -->
+                    <div class="kpi-grid" style="margin-bottom: 30px;">
+                        <div class="kpi-card" style="border-left: 4px solid #e67e22;">
+                            <div class="kpi-title">Low Stock Items</div>
+                            <div class="kpi-value">7 products</div>
+                            <div class="kpi-trend">Reorder recommended</div>
+                        </div>
+                        <div class="kpi-card" style="border-left: 4px solid #c44536;">
+                            <div class="kpi-title">Expiring Soon (≤7 days)</div>
+                            <div class="kpi-value">3 batches</div>
+                            <div class="kpi-trend">Take action</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Total SKUs</div>
+                            <div class="kpi-value">1,247</div>
+                            <div class="kpi-trend">+23 this month</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Warehouse Value</div>
+                            <div class="kpi-value">ETB 3.2M</div>
+                            <div class="kpi-trend">At cost</div>
+                        </div>
+                    </div>
+
+                    <!-- Product Catalog -->
+                    <div class="filter-bar">
+                        <input class="filter-input" type="text" placeholder="Search products...">
+                        <select class="filter-input" style="flex: 0.3;">
+                            <option>All Categories</option>
+                            <option>Food & Beverage</option>
+                            <option>Electronics</option>
+                            <option>Pharmaceuticals</option>
+                        </select>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>SKU</th>
+                                <th>Category</th>
+                                <th>Stock</th>
+                                <th>Batch</th>
+                                <th>Expiry</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><i class="fas fa-box" style="margin-right: 8px;"></i> Wheat Flour 50kg</td>
+                                <td>WF-001</td>
+                                <td>Food</td>
+                                <td>124 bags</td>
+                                <td>B2024-12</td>
+                                <td>2024-12</td>
+                                <td><span class="status-badge">Good</span></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-box" style="margin-right: 8px;"></i> Tomato Paste 400g</td>
+                                <td>TP-022</td>
+                                <td>Food</td>
+                                <td>43 units</td>
+                                <td>T22-03</td>
+                                <td>2024-04-15</td>
+                                <td><span class="status-badge" style="background: #fef7e9; color:#b37700;">Low Stock</span></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-box" style="margin-right: 8px;"></i> Paracetamol 500mg</td>
+                                <td>PH-089</td>
+                                <td>Pharma</td>
+                                <td>2,340 boxes</td>
+                                <td>L89Z-2</td>
+                                <td>2025-02</td>
+                                <td><span class="status-badge">Good</span></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-box" style="margin-right: 8px;"></i> Fresh Milk 1L</td>
+                                <td>DY-003</td>
+                                <td>Dairy</td>
+                                <td>87 units</td>
+                                <td>Y3-0314</td>
+                                <td>2024-03-18</td>
+                                <td><span class="status-badge" style="background: #c44536; color:white;">Expiring</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Warehouse Transfers -->
+                    <h5 style="margin: 32px 0 16px;">Pending Warehouse Transfers</h5>
+                    <div class="panel">
+                        <div class="row-item">
+                            <span><strong>From:</strong> Central Warehouse</span>
+                            <span><strong>To:</strong> North Branch</span>
+                            <span>15 items</span>
+                            <span class="status-badge">In Transit</span>
+                            <button class="action-button" onclick="showNotification('Transfer details')">View</button>
+                        </div>
+                        <div class="row-item">
+                            <span><strong>From:</strong> South Warehouse</span>
+                            <span><strong>To:</strong> Retail Outlet #3</span>
+                            <span>8 items</span>
+                            <span class="status-badge">Pending</span>
+                            <button class="action-button" onclick="showNotification('Transfer details')">View</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SALES PAGE -->
+                <div id="page-sales" class="page">
+                    <div class="section-header">
+                        <h3>Sales & Purchases</h3>
+                        <button class="primary-button" onclick="openNewInvoiceModal()"><i class="fas fa-plus"></i> New Invoice</button>
+                    </div>
+
+                    <!-- Summary -->
+                    <div class="kpi-grid" style="margin-bottom: 30px;">
+                        <div class="kpi-card">
+                            <div class="kpi-title">Today's Sales</div>
+                            <div class="kpi-value">ETB 43,200</div>
+                            <div class="kpi-trend">8 transactions</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Outstanding Credit</div>
+                            <div class="kpi-value">ETB 187,500</div>
+                            <div class="kpi-trend">12 customers</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Pending Orders</div>
+                            <div class="kpi-value">23</div>
+                            <div class="kpi-trend">6 ready to ship</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Monthly Target</div>
+                            <div class="kpi-value">78%</div>
+                            <div class="kpi-trend">ETB 847k / 1.1M</div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Invoices -->
+                    <h5>Recent Invoices</h5>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Invoice #</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Payment</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>INV-2024-089</td>
+                                <td>ABC Retail PLC</td>
+                                <td>2024-03-15</td>
+                                <td>ETB 23,500</td>
+                                <td><span class="status-badge">Completed</span></td>
+                                <td>Full</td>
+                                <td><button class="action-button" onclick="showNotification('View invoice')"><i class="fas fa-eye"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>INV-2024-090</td>
+                                <td>XYZ Supermarket</td>
+                                <td>2024-03-15</td>
+                                <td>ETB 12,800</td>
+                                <td><span class="status-badge" style="background: #fef7e9; color:#b37700;">Partial</span></td>
+                                <td>ETB 5,000 paid</td>
+                                <td><button class="action-button" onclick="showNotification('View invoice')"><i class="fas fa-eye"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>INV-2024-091</td>
+                                <td>Fresh Foods Ltd</td>
+                                <td>2024-03-14</td>
+                                <td>ETB 45,200</td>
+                                <td><span class="status-badge" style="background: #f0f5fa;">Credit</span></td>
+                                <td>Due 04/15</td>
+                                <td><button class="action-button" onclick="showNotification('View invoice')"><i class="fas fa-eye"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Quick Add -->
+                    <div class="comms-bar" style="margin-top: 30px;">
+                        <i class="fas fa-bolt" style="color: #56c596;"></i>
+                        <span>Quick actions: Add customer during transaction · Add new product · Record payment</span>
+                        <button class="comms-button" onclick="showNotification('Quick add form')">Quick Add</button>
+                    </div>
+                </div>
+
+                <!-- EMPLOYEES PAGE (RBAC) -->
+                <div id="page-employees" class="page">
+                    <div class="section-header">
+                        <h3>Employee Management & Role-Based Access</h3>
+                        <button class="primary-button" onclick="openAddEmployeeModal()"><i class="fas fa-plus"></i> Add Employee</button>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Permissions</th>
+                                <th>Last Active</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Natnael A. (Owner)</td>
+                                <td>natnael@business.et</td>
+                                <td><span class="status-badge" style="background:#0b2b40; color:white;">Admin</span></td>
+                                <td>Full access</td>
+                                <td>Now</td>
+                                <td><i class="fas fa-circle" style="color:#56c596; font-size:0.6rem;"></i> Online</td>
+                                <td><button class="action-button">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>Abebe K.</td>
+                                <td>abebe@business.et</td>
+                                <td><span class="status-badge">Manager</span></td>
+                                <td>Inventory, Sales, Reports</td>
+                                <td>2 hours ago</td>
+                                <td><i class="fas fa-circle" style="color:#56c596; font-size:0.6rem;"></i> Online</td>
+                                <td><button class="action-button">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>Meron T.</td>
+                                <td>meron@business.et</td>
+                                <td><span class="status-badge">Sales Rep</span></td>
+                                <td>Sales, Customers only</td>
+                                <td>5 mins ago</td>
+                                <td><i class="fas fa-circle" style="color:#56c596; font-size:0.6rem;"></i> Online</td>
+                                <td><button class="action-button">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>Tekle W.</td>
+                                <td>tekle@business.et</td>
+                                <td><span class="status-badge">Inventory</span></td>
+                                <td>Stock, Batches, Transfers</td>
+                                <td>Yesterday</td>
+                                <td><i class="fas fa-circle" style="color:#8f9fb1; font-size:0.6rem;"></i> Offline</td>
+                                <td><button class="action-button">Edit</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="panel" style="margin-top: 30px;">
+                        <h5><i class="fas fa-history"></i> Recent Activity Log (Immutable)</h5>
+                        <div class="row-item"><span>2024-03-15 14:32:23</span> <span>Admin Natnael modified inventory batch #T22</span> <span style="color:#5e6f88;">IP: 192.168.1.45</span></div>
+                        <div class="row-item"><span>2024-03-15 11:17:05</span> <span>Meron T. created invoice INV-2024-090</span> <span style="color:#5e6f88;">From: Sales app</span></div>
+                        <div class="row-item"><span>2024-03-14 23:01:12</span> <span>System: Backup completed</span> <span style="color:#5e6f88;">Auto</span></div>
+                    </div>
+                </div>
+
+                <!-- AI INSIGHTS PAGE -->
+                <div id="page-insights" class="page">
+                    <div class="section-header">
+                        <h3>AI-Powered Insights & Forecasting</h3>
+                        <button class="primary-button" onclick="exportReport()"><i class="fas fa-download"></i> Export Report</button>
+                    </div>
+
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-title">Sales Forecast (Next Month)</div>
+                            <div class="kpi-value">ETB 1.2M</div>
+                            <div class="kpi-trend">+15% vs current</div>
+                        </div>
+                        <div class="kpi-card" style="border-left: 4px solid #e67e22;">
+                            <div class="kpi-title">Predicted Shortages</div>
+                            <div class="kpi-value">3 items</div>
+                            <div class="kpi-trend">Wheat, Oil, Packaging</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Avg. Profit Margin</div>
+                            <div class="kpi-value">23.5%</div>
+                            <div class="kpi-trend">+2.1% vs last quarter</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Expense Pattern</div>
+                            <div class="kpi-value">Peak: Week 2</div>
+                            <div class="kpi-trend">Optimization available</div>
+                        </div>
+                    </div>
+
+                    <div class="split-panel">
+                        <div class="panel">
+                            <h5>Sales Forecast - Top Products</h5>
+                            <div class="row-item"><span>Wheat Flour</span> <strong>↑ 24%</strong></div>
+                            <div class="row-item"><span>Cooking Oil</span> <strong>↑ 18%</strong></div>
+                            <div class="row-item"><span>Sugar</span> <strong>↑ 12%</strong></div>
+                            <div class="row-item"><span>Electronics</span> <strong>→ 3%</strong></div>
+                        </div>
+                        <div class="panel">
+                            <h5>Inventory Recommendations</h5>
+                            <div class="row-item"><span>Reorder: Tomato paste</span> <span class="expiry-warning">Stock: 43 (min 100)</span></div>
+                            <div class="row-item"><span>Promote: Dairy items</span> <span style="color:#e67e22;">Expiring soon</span></div>
+                            <div class="row-item"><span>Increase: Packaging materials</span> <span>Forecast: +22% sales</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COMMUNICATION PAGE -->
+                <div id="page-communication" class="page">
+                    <div class="section-header">
+                        <h3>Communication Hub</h3>
+                        <button class="primary-button" onclick="openComposeModal()"><i class="fas fa-plus"></i> New Message</button>
+                    </div>
+
+                    <div class="comms-bar" style="border-radius: 20px; margin-bottom: 30px;">
+                        <div class="comms-icon" style="background: #25D366; color:white;"><i class="fab fa-whatsapp"></i></div>
+                        <div class="comms-icon" style="background: #0088cc; color:white;"><i class="fab fa-telegram-plane"></i></div>
+                        <div class="comms-icon" style="background: #34B7F1; color:white;"><i class="fas fa-sms"></i></div>
+                        <div class="comms-icon" style="background: #EA4335; color:white;"><i class="fas fa-envelope"></i></div>
+                        <span>Connected gateways: Active</span>
+                    </div>
+
+                    <div class="split-panel">
+                        <div class="panel">
+                            <h5>Team Chat</h5>
+                            <div class="row-item">
+                                <span><strong>Abebe:</strong> Stock transfer completed</span>
+                                <span style="color:#8f9fb1;">2m ago</span>
+                            </div>
+                            <div class="row-item">
+                                <span><strong>Meron:</strong> New customer ABC Retail</span>
+                                <span style="color:#8f9fb1;">15m ago</span>
+                            </div>
+                            <div class="row-item">
+                                <span><strong>System:</strong> Low stock alert</span>
+                                <span style="color:#8f9fb1;">1h ago</span>
+                            </div>
+                        </div>
+                        <div class="panel">
+                            <h5>Bulk Messaging</h5>
+                            <p>Templates:</p>
+                            <div class="row-item">Holiday Promotion <button class="action-button" onclick="showNotification('Use template')">Use</button></div>
+                            <div class="row-item">Payment Reminder <button class="action-button" onclick="showNotification('Use template')">Use</button></div>
+                            <div class="row-item">New Stock Alert <button class="action-button" onclick="showNotification('Use template')">Use</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IMMUTABLE LOGS PAGE -->
+                <div id="page-logs" class="page">
+                    <div class="section-header">
+                        <h3>Immutable Activity Logs</h3>
+                        <button class="primary-button" onclick="exportLogs()"><i class="fas fa-download"></i> Export Logs</button>
+                    </div>
+
+                    <p style="color:#5e6f88; margin-bottom: 16px;"><i class="fas fa-lock"></i> These logs cannot be deleted or modified (Admin only)</p>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>User</th>
+                                <th>Action</th>
+                                <th>Module</th>
+                                <th>IP Address</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2024-03-15 16:45:22</td>
+                                <td>Natnael (Admin)</td>
+                                <td>Updated user permissions</td>
+                                <td>RBAC</td>
+                                <td>197.156.32.145</td>
+                                <td><i class="fas fa-check-circle" style="color:#56c596;"></i></td>
+                            </tr>
+                            <tr>
+                                <td>2024-03-15 15:30:11</td>
+                                <td>Meron T.</td>
+                                <td>Created invoice INV-2024-092</td>
+                                <td>Sales</td>
+                                <td>197.156.32.200</td>
+                                <td><i class="fas fa-check-circle" style="color:#56c596;"></i></td>
+                            </tr>
+                            <tr>
+                                <td>2024-03-15 14:22:05</td>
+                                <td>Abebe K.</td>
+                                <td>Adjusted stock levels - batch T22</td>
+                                <td>Inventory</td>
+                                <td>197.156.32.178</td>
+                                <td><i class="fas fa-check-circle" style="color:#56c596;"></i></td>
+                            </tr>
+                            <tr>
+                                <td>2024-03-15 11:03:47</td>
+                                <td>System</td>
+                                <td>Daily backup completed</td>
+                                <td>System</td>
+                                <td>127.0.0.1</td>
+                                <td><i class="fas fa-check-circle" style="color:#56c596;"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- MAIN PANEL -->
-    <div class="main">
-        <div class="top-bar">
-            <div class="page-title">
-                <h1>Business overview</h1>
-                <p><i class="fas fa-map-marker-alt" style="color:#56c596;"></i> Addis Ababa · central warehouse</p>
-            </div>
-            <div class="user-profile">
-                <i class="fas fa-bell"></i>
-                <i class="fas fa-envelope"></i>
-                <div class="avatar">NA</div>
-            </div>
-        </div>
-
-        <div class="content">
-            <!-- KPI row: real-time P&L, low stock etc -->
-            <div class="kpi-grid">
-                <div class="kpi-card">
-                    <div class="kpi-title"><i class="fas fa-chart-pie" style="color:#32936f;"></i> Today's P&L</div>
-                    <div class="kpi-value">+ ETB 24,580</div>
-                    <div class="kpi-trend"><i class="fas fa-arrow-up"></i> +5.3% vs yesterday</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-title"><i class="fas fa-exclamation-triangle" style="color:#e67e22;"></i> Low stock alerts</div>
-                    <div class="kpi-value">7 items</div>
-                    <div class="kpi-trend">2 expiring in ≤7 days</div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-title"><i class="fas fa-hand-holding-usd"></i> Outstanding loans</div>
-                    <div class="kpi-value">ETB 342,000</div>
-                    <div class="kpi-trend">3 due this week <i class="fas fa-clock" style="margin-left:6px;"></i></div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-title"><i class="fas fa-truck"></i> Warehouse transfers</div>
-                    <div class="kpi-value">12 pending</div>
-                    <div class="kpi-trend"><i class="fas fa-sync-alt"></i> offline sync ready</div>
-                </div>
-            </div>
-
-            <!-- Feature modules (section 4.2 - 4.6) -->
-            <div class="section-header">
-                <h3>Core modules <span class="badge-offline"><i class="fas fa-wifi-slash"></i> offline capable</span></h3>
-                <a href="#">view all <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-wallet"></i></div>
-                    <h4>Financial ops <span style="color:#56c596; font-size:0.8rem;">+ loans</span></h4>
-                    <p>Banks, branches, expense categories, receipt capture & tax (VAT/withholding).</p>
-                    <span class="feature-tag">unlimited banks</span>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-box-open"></i></div>
-                    <h4>Inventory (FIFO) </h4>
-                    <p>Batch tracking, expiry alerts, low-stock reorder, product images & attributes.</p>
-                    <span class="feature-tag">shelf-life alerts</span>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-file-invoice"></i></div>
-                    <h4>Sales & invoices</h4>
-                    <p>Partial/credit payments, add customer/product on fly, order status.</p>
-                    <span class="feature-tag">invoice via mobile</span>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-comments"></i></div>
-                    <h4>Team chat & notifications</h4>
-                    <p>In-app chat, push, WhatsApp/SMS/Telegram bulk messaging.</p>
-                    <span class="feature-tag">bulk promo</span>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
-                    <h4>AI insights</h4>
-                    <p>Sales forecast, shortage prediction, margin analysis.</p>
-                    <span class="feature-tag">export PDF/Excel</span>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-fingerprint"></i></div>
-                    <h4>Secure access</h4>
-                    <p>Biometric/PIN, role dashboards, immutable activity logs.</p>
-                    <span class="feature-tag">RBAC + audit</span>
-                </div>
-            </div>
-
-            <!-- Detailed rows: P&L + expiry -->
-            <div class="split-panel">
-                <div class="panel">
-                    <h5><i class="fas fa-coins" style="color:#0b2b40;"></i> Profit & Loss (real-time)</h5>
-                    <div class="row-item"><span>Revenue (today)</span> <strong>ETB 43,200</strong></div>
-                    <div class="row-item"><span>Expenses (receipts)</span> <strong>ETB 18,620</strong></div>
-                    <div class="row-item"><span>Tax (VAT 15%)</span> <strong>ETB 3,645</strong></div>
-                    <div class="row-item"><span style="font-weight:600;">Net P&L</span> <span style="font-weight:700;color:#0b2b40;">ETB 20,935</span></div>
-                    <p style="margin-top:16px;"><i class="fas fa-camera"></i> 3 new receipts captured via mobile · attach</p>
-                </div>
-                <div class="panel">
-                    <h5><i class="fas fa-calendar-exclamation" style="color:#c44536;"></i> Expiry & batch tracking</h5>
-                    <div class="row-item"><span>Tomato paste (batch#T22)</span> <span class="expiry-warning">expires in 6 days</span></div>
-                    <div class="row-item"><span>Pharmaceutical - lot 89Z</span> <span class="expiry-warning">expires in 12 days</span></div>
-                    <div class="row-item"><span>Dairy Y-3</span> <span style="color:#e67e22;">expires in 3 days</span></div>
-                    <div class="row-item"><span>Flour sack B</span> <span>ok (fresh)</span></div>
-                    <p style="margin-top:12px;"><i class="fas fa-bell"></i> push alert sent for 2 items</p>
-                </div>
-            </div>
-
-            <!-- Communication & third party integrations (SMS, WhatsApp, Telegram) -->
-            <div class="comms-bar">
-                <div class="comms-icon"><i class="fas fa-sms"></i></div>
-                <div class="comms-icon"><i class="fab fa-whatsapp"></i></div>
-                <div class="comms-icon"><i class="fab fa-telegram-plane"></i></div>
-                <div class="comms-icon"><i class="fas fa-envelope"></i></div>
-                <span style="color:#1a2639;font-weight:500;">Message customers · bulk holiday promo</span>
-                <button class="comms-button"><i class="fas fa-rocket"></i> Send notification</button>
-            </div>
-
-            <!-- maps integration + AI preview -->
-            <div style="display: flex; gap: 20px; margin: 28px 0 20px;">
-                <div style="background: white; border-radius: 24px; padding: 18px; flex:2; display: flex; align-items: center; gap: 15px;">
-                    <i class="fas fa-map-marked-alt" style="font-size: 2rem; color:#56c596;"></i>
-                    <div><strong>Google Maps integration</strong> <span style="color:#5e6f88; display:block; font-size:0.9rem;">branch/warehouse routing · customer delivery zones</span></div>
-                </div>
-                <div style="background: white; border-radius: 24px; padding: 18px; flex:1.5; display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-robot" style="font-size: 1.8rem; color:#0b2b40;"></i>
-                    <div><strong>AI prediction:</strong> stock shortage (wheat) expected in 2 weeks</div>
-                </div>
-            </div>
-
-            <footer>
-                ⚡ offline sync enabled · role: admin · immutable logs active · © concept for Natnael – fullstack proposal
-            </footer>
+    <!-- MODALS -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="modal-content">
+            <!-- Dynamic content will be inserted here -->
         </div>
     </div>
 
-    <!-- simple interactive hover & button simulation (already functional) 
-         all images are replaced by font icons / properly placed -->
+    <script>
+        // Page switching functionality
+        function switchPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+            
+            // Show selected page
+            document.getElementById(`page-${pageName}`).classList.add('active-page');
+            
+            // Update active nav item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.getElementById(`nav-${pageName}`).classList.add('active');
+            
+            // Update page title
+            const titles = {
+                'dashboard': 'Business overview',
+                'financial': 'Financial Operations',
+                'inventory': 'Inventory Management',
+                'sales': 'Sales & Purchases',
+                'employees': 'Employee Management',
+                'insights': 'AI Insights',
+                'communication': 'Communication Hub',
+                'logs': 'Immutable Activity Logs'
+            };
+            document.getElementById('page-title').textContent = titles[pageName] || 'Business Manager';
+        }
+
+        // Notification function
+        function showNotification(msg = 'Feature demo - full functionality in production') {
+            alert(msg);
+        }
+
+        // Modal functions
+        function openModal(title, content) {
+            const modal = document.getElementById('modal-content');
+            modal.innerHTML = `
+                <h3>${title}</h3>
+                ${content}
+                <div class="modal-buttons">
+                    <button class="action-button" onclick="closeModal()">Cancel</button>
+                    <button class="primary-button" onclick="closeModal(); showNotification('Demo: Data saved')">Save</button>
+                </div>
+            `;
+            document.getElementById('modal-overlay').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').style.display = 'none';
+        }
+
+        function openAddTransactionModal() {
+            openModal('Add Transaction', `
+                <label>Type:</label>
+                <select>
+                    <option>Income</option>
+                    <option>Expense</option>
+                    <option>Loan</option>
+                </select>
+                <label>Amount (ETB):</label>
+                <input type="number" placeholder="Enter amount">
+                <label>Description:</label>
+                <input type="text" placeholder="Enter description">
+                <label>Attach Receipt:</label>
+                <input type="file" accept="image/*">
+            `);
+        }
+
+        function openAddProductModal() {
+            openModal('Add Product', `
+                <label>Product Name:</label>
+                <input type="text" placeholder="Enter product name">
+                <label>Category:</label>
+                <select>
+                    <option>Food & Beverage</option>
+                    <option>Electronics</option>
+                    <option>Pharmaceuticals</option>
+                </select>
+                <label>Initial Stock:</label>
+                <input type="number" placeholder="Quantity">
+                <label>Batch Number:</label>
+                <input type="text" placeholder="Batch #">
+                <label>Expiry Date:</label>
+                <input type="date">
+            `);
+        }
+
+        function openNewInvoiceModal() {
+            openModal('Create New Invoice', `
+                <label>Customer:</label>
+                <input type="text" placeholder="Search or add new customer...">
+                <label>Products:</label>
+                <textarea placeholder="Enter products (one per line)"></textarea>
+                <label>Payment Type:</label>
+                <select>
+                    <option>Full Payment</option>
+                    <option>Partial Payment</option>
+                    <option>Credit</option>
+                </select>
+                <label>Amount:</label>
+                <input type="number" placeholder="Total amount">
+            `);
+        }
+
+        function openAddEmployeeModal() {
+            openModal('Add Employee', `
+                <label>Full Name:</label>
+                <input type="text" placeholder="Enter name">
+                <label>Email:</label>
+                <input type="email" placeholder="Enter email">
+                <label>Role:</label>
+                <select>
+                    <option>Sales Rep</option>
+                    <option>Inventory Manager</option>
+                    <option>Finance</option>
+                    <option>Manager</option>
+                </select>
+                <label>Permissions:</label>
+                <select multiple size="3">
+                    <option>Sales Access</option>
+                    <option>Inventory Access</option>
+                    <option>Financial Access</option>
+                    <option>Reports Access</option>
+                </select>
+            `);
+        }
+
+        function openComposeModal() {
+            openModal('Compose Message', `
+                <label>Channel:</label>
+                <select>
+                    <option>WhatsApp</option>
+                    <option>SMS</option>
+                    <option>Telegram</option>
+                    <option>Email</option>
+                </select>
+                <label>Recipients:</label>
+                <input type="text" placeholder="Select customer group">
+                <label>Message:</label>
+                <textarea rows="4" placeholder="Type your message..."></textarea>
+                <label>Schedule:</label>
+                <input type="datetime-local">
+            `);
+        }
+
+        function showMapModal() {
+            openModal('Map Integration', `
+                <div style="background: #f0f5fa; height: 200px; display: flex; align-items: center; justify-content: center; border-radius: 12px;">
+                    <i class="fas fa-map-marked-alt" style="font-size: 3rem; color: #56c596;"></i>
+                    <p style="margin-left: 16px;">Google Maps would display here<br><small>Branch locations, delivery zones</small></p>
+                </div>
+                <p style="margin-top: 16px;"><strong>Branches:</strong> Central, North, South, East</p>
+                <p><strong>Active deliveries:</strong> 8</p>
+            `);
+        }
+
+        function exportReport() {
+            showNotification('Exporting report as PDF/Excel/CSV');
+        }
+
+        function exportLogs() {
+            showNotification('Exporting immutable logs (audit trail)');
+        }
+
+        // Initialize active nav on page load
+        window.onload = function() {
+            // Ensure dashboard is active
+            switchPage('dashboard');
+            
+            // Click outside modal to close
+            document.getElementById('modal-overlay').addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+        };
+    </script>
 </body>
 </html>
